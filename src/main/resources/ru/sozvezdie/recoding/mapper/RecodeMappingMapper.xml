@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ru.sozvezdie.recoding.mapper.RecodeMappingMapper">
+    <select id="select" resultType="ru.sozvezdie.recoding.domain.recode.RecodeMapping">
+        SELECT
+            mapping.id,
+            mapping.type,
+            mapping.active
+        FROM public.recode_mapping AS mapping
+        <trim prefix="WHERE" prefixOverrides="AND ">
+            <if test="id != null">
+                AND mapping.id = #{id}
+            </if>
+            <if test="type != null">
+                AND mapping.type = #{type}::recode_mapping_type_enum
+            </if>
+            <if test="active != null">
+                AND mapping.active = #{active}
+            </if>
+        </trim>
+    </select>
+</mapper>

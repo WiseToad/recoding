@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ru.sozvezdie.recoding.mapper.RecodeSchemaHandlerMapper">
+    <select id="select" resultType="ru.sozvezdie.recoding.domain.recode.RecodeSchemaHandler">
+        SELECT
+            handler.recode_schema_id,
+            handler.handler,
+            handler.priority,
+            schema.scope
+        FROM public.recode_schema_handler AS handler
+            JOIN public.recode_schema AS schema ON schema.id = handler.recode_schema_id
+        <trim prefix="WHERE" prefixOverrides="AND ">
+            <if test="schemaId != null">
+                AND handler.recode_schema_id = #{schemaId}
+            </if>
+            <if test="active != null">
+                AND schema.active = #{active}
+            </if>
+        </trim>
+        ORDER BY
+            handler.recode_schema_id,
+            handler.priority
+    </select>
+</mapper>
